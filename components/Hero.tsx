@@ -34,17 +34,17 @@ const Hero = () => {
       <div className="flex justify-center relative my-20 z-10">
         <div className="max-w-[89vw] md:max-w-2xl lg:max-w-[60vw] flex flex-col items-center justify-center">
           <h2 className="uppercase tracking-widest text-xs text-blue-100 max-w-80">
-            Computer Engineering undergraduate
+            Chathura De Silva
           </h2>
           <TextGenerateEffect
             className="text-center text-[40px] md:text-5xl lg:text-6xl"
-            words="Chathura De Silva"
+            words="Hi! Welcome To My Personal Portfolio"
           ></TextGenerateEffect>
           <p className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-2xl">
-            Hi! I&apos;m Chathura
+            I'm currently a third year CSE undergraduate at University of Moratuwa.
           </p>
           <a href="#about">
-            <MagicButton title="Show My Work" icon={<FaLocationArrow/>} position="right"></MagicButton>
+            <MagicButton title="See My Work" icon={<FaLocationArrow/>} position="right"></MagicButton>
           </a>
         </div>
       </div>
