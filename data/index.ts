@@ -15,7 +15,7 @@ export const gridItems = [
     description:
       "A critical thinker with a keen eye for detail, I’m skilled at planning and executing with precision.",
     className: "lg:col-span-3 md:col-span-6 md:row-span-4 lg:min-h-[60vh]",
-    imgClassName: "w-full h-full",
+    imgClassName: "w-full h-full object-cover",
     titleClassName: "justify-end",
     img: "/b1.svg",
     spareImg: "",
@@ -101,7 +101,7 @@ export const projects = [
       "/androidstudio.svg",
       "/firestore.png",
     ],
-    link: "https://this_one_is_closed_source🤭",
+    link: "Closed Source", // using "Closed Source" as the link will prevent from attaching a link to the relavant project component.
   },
   {
     id: 3,
@@ -232,44 +232,50 @@ export const socialMedia = [
   {
     id: 1,
     img: "/git.svg",
-    link: "https://github.com/chathura-de-silva"
+    link: "https://github.com/chathura-de-silva",
   },
   {
     id: 2,
     img: "/twit.svg",
-    link:"https://x.com/Chathuradsilva"
+    link: "https://x.com/Chathuradsilva",
   },
   {
     id: 3,
     img: "/medium.svg",
-     link:"https://medium.com/@ac.chathura"
+    link: "https://medium.com/@ac.chathura",
   },
 ];
 
 export const workPhase = [
   {
-    id:1,
+    id: 1,
     title: "Think",
     order: "Think",
-    description: "First of all I think and understand the problem and the problem environment.",
+    description:
+      "First of all I think and understand the problem and the problem environment.",
     animSpeed: 5.1,
     classes: "bg-emerald-900 rounded-3xl overflow-hidden",
   },
   {
-    id:2,
+    id: 2,
     title: "Plan",
     order: "Plan",
-    description: "Secondly I plan a solution to the problem and study the feasibility of the solution.",
+    description:
+      "Secondly I plan a solution to the problem and study the feasibility of the solution.",
     animSpeed: 3,
     classes: "bg-pink-900 rounded-3xl overflow-hidden",
     particleSize: 2,
-    colorList: [[236, 72, 153],[232, 121, 249],],
+    colorList: [
+      [236, 72, 153],
+      [232, 121, 249],
+    ],
   },
   {
-    id:3,
+    id: 3,
     title: "Execute",
     order: "Execute",
-    description: "Then I start executing the plan and develop the solution, going back to previoues stages whenever needed.",
+    description:
+      "Then I start executing the plan and develop the solution, going back to previoues stages whenever needed.",
     animSpeed: 3,
     classes: "bg-sky-600 rounded-3xl overflow-hidden",
     colorList: [[125, 211, 252]],

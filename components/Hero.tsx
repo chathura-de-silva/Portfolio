@@ -31,11 +31,12 @@ const Hero = () => {
         [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"
         ></div>
       </div>
-      <div className="flex justify-center relative my-20 z-10">
+      <div className="flex justify-center relative mb-10 z-10">
         <div className="max-w-[89vw] md:max-w-2xl lg:max-w-[60vw] flex flex-col items-center justify-center">
-          <h2 className="uppercase tracking-widest text-xs text-blue-100 max-w-80">
+        <img src="/myphoto.png" className="max-w-[150px]"/>
+          {/* <h2 className="uppercase tracking-widest text-xs text-blue-100 max-w-80">
             Chathura De Silva
-          </h2>
+          </h2> */}
           <TextGenerateEffect
             className="text-center text-[40px] md:text-5xl lg:text-6xl"
             words="Hi! Welcome To My Personal Portfolio"
