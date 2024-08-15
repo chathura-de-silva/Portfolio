@@ -1,9 +1,10 @@
 import { profile } from "console";
+import { Container } from "postcss";
 
 export const navItems = [
   { name: "About", link: "#about" },
   { name: "Projects", link: "#projects" },
-  { name: "Testimonials", link: "#testimonials" },
+  { name: "About", link: "#experience" },
   { name: "Contact", link: "#contact" },
 ];
 
@@ -239,5 +240,35 @@ export const socialMedia = [
   {
     id: 3,
     img: "/link.svg",
+  },
+];
+
+export const workPhase = [
+  {
+    id:1,
+    title: "Think",
+    order: "Think",
+    description: "First of all I think and understand the problem and the problem environment.",
+    animSpeed: 5.1,
+    classes: "bg-emerald-900",
+  },
+  {
+    id:2,
+    title: "Plan",
+    order: "Plan",
+    description: "Secondly I plan a solution to the problem and study the feasibility of the solution.",
+    animSpeed: 3,
+    classes: "bg-black",
+    particleSize: 2,
+    colorList: [[236, 72, 153],[232, 121, 249],],
+  },
+  {
+    id:3,
+    title: "Execute",
+    order: "Execute",
+    description: "Then I start executing the plan and develop the solution, going back to previoues stages whenever needed.",
+    animSpeed: 3,
+    classes: "bg-sky-600",
+    colorList: [[125, 211, 252]],
   },
 ];
