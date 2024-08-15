@@ -232,14 +232,17 @@ export const socialMedia = [
   {
     id: 1,
     img: "/git.svg",
+    link: "https://github.com/chathura-de-silva"
   },
   {
     id: 2,
     img: "/twit.svg",
+    link:"https://x.com/Chathuradsilva"
   },
   {
     id: 3,
-    img: "/link.svg",
+    img: "/medium.svg",
+     link:"https://medium.com/@ac.chathura"
   },
 ];
 
