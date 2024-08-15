@@ -41,7 +41,7 @@ const Hero = () => {
             words="Hi! Welcome To My Personal Portfolio"
           ></TextGenerateEffect>
           <p className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-2xl">
-            I'm currently a third year CSE undergraduate at University of Moratuwa.
+            I&apos;m currently a third year CSE undergraduate at University of Moratuwa.
           </p>
           <a href="#about">
             <MagicButton title="See My Work" icon={<FaLocationArrow/>} position="right"></MagicButton>
