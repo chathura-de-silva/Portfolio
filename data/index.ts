@@ -2,7 +2,7 @@ import { profile } from "console";
 import { Container } from "postcss";
 
 export const navItems = [
-  { name: "About", link: "#about" },
+  { name: "Intro", link: "#about" },
   { name: "Projects", link: "#projects" },
   { name: "About", link: "#experience" },
   { name: "Contact", link: "#contact" },
