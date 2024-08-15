@@ -250,7 +250,7 @@ export const workPhase = [
     order: "Think",
     description: "First of all I think and understand the problem and the problem environment.",
     animSpeed: 5.1,
-    classes: "bg-emerald-900",
+    classes: "bg-emerald-900 rounded-3xl overflow-hidden",
   },
   {
     id:2,
@@ -258,7 +258,7 @@ export const workPhase = [
     order: "Plan",
     description: "Secondly I plan a solution to the problem and study the feasibility of the solution.",
     animSpeed: 3,
-    classes: "bg-black",
+    classes: "bg-pink-900 rounded-3xl overflow-hidden",
     particleSize: 2,
     colorList: [[236, 72, 153],[232, 121, 249],],
   },
@@ -268,7 +268,7 @@ export const workPhase = [
     order: "Execute",
     description: "Then I start executing the plan and develop the solution, going back to previoues stages whenever needed.",
     animSpeed: 3,
-    classes: "bg-sky-600",
+    classes: "bg-sky-600 rounded-3xl overflow-hidden",
     colorList: [[125, 211, 252]],
   },
 ];
