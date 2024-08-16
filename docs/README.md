@@ -1,29 +1,5 @@
 ![Banner](./repoBanner.png)
 
-# Tech Stack 
-
-<table style="width: 100%; border-collapse: collapse;">
-  <tr>
-    <td style="width: 16.66%; padding: 10px; text-align: center;">
-      <img src="./nextjs.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
-    </td>
-    <td style="width: 16.66%; padding: 10px; text-align: center;">
-      <img src="./react.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
-    </td>
-    <td style="width: 16.66%; padding: 10px; text-align: center;">
-      <img src="./ts.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
-    </td>
-    <td style="width: 16.66%; padding: 10px; text-align: center;">
-      <img src="./framermotion.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
-    </td>
-    <td style="width: 16.66%; padding: 10px; text-align: center;">
-      <img src="./tailwindcss.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
-    </td>
-    <td style="width: 16.66%; padding: 10px; text-align: center;">
-      <img src="./acertenity.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
-    </td>
-  </tr>
-</table>
 
 # Get Started
 
@@ -80,6 +56,31 @@ npm install
         ```bash
         npm start
         ```
+        
+# Tech Stack 
+
+<table style="width: 100%; border-collapse: collapse;">
+  <tr>
+    <td style="width: 16.66%; padding: 10px; text-align: center;">
+      <img src="./nextjs.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
+    </td>
+    <td style="width: 16.66%; padding: 10px; text-align: center;">
+      <img src="./react.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
+    </td>
+    <td style="width: 16.66%; padding: 10px; text-align: center;">
+      <img src="./ts.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
+    </td>
+    <td style="width: 16.66%; padding: 10px; text-align: center;">
+      <img src="./framermotion.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
+    </td>
+    <td style="width: 16.66%; padding: 10px; text-align: center;">
+      <img src="./tailwindcss.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
+    </td>
+    <td style="width: 16.66%; padding: 10px; text-align: center;">
+      <img src="./acertenity.png" style="width: 100%; height: auto; display: block;" alt="Gallery Image">
+    </td>
+  </tr>
+</table>
 
 # Additional Notes
 
@@ -89,6 +90,9 @@ npm install
 
 *   Favicon does not work on development builds for some reason. But it does on production builds.
 
+* Testimonial section with a section(Client Section) to include companies worked has been implemented but commented out. When ever needed can get back by enabling them inside `page.tsx` 
+
+* In Project section, passing "Closed Source" as the resource URL inside `./data/index.ts` will hide the `Check out on Github` button disabling the anchor tag.
 
 # Useful Resources
 
