@@ -1,0 +1,21 @@
+Custom License
+1. License Grant
+You are free to use, modify, and distribute the codebase of this project, including the Next.js site that has been built and improved
+from an open-source template. This allows for the creation of derivative works and redistribution of the codebase under the same terms.
+
+2. Personal Data Protection
+The content, data, and any personal information included in this project are proprietary and cannot be used, replicated, or hosted
+elsewhere without explicit written consent from the original author.
+
+3. Attribution
+You must provide proper attribution if needed to the original source of the open-source template used in this project. This includes acknowledging
+the original authors of the template in any documentation or distribution of the derived works.
+(Owner of the base template : @adrianhajdin)
+
+4. No Warranty
+This project is provided "as-is," without warranty of any kind, express or implied. The author is not liable for any damages or issues
+arising from the use of this code.
+
+5. License Compliance
+By using, modifying, or distributing this project, you agree to comply with the terms outlined in this license. Failure to adhere to these
+terms may result in the revocation of the license.
