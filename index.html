@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE Portfolio | Minimalist</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        matte: {
+                            light: '#f5f5f7', // Off-white matte
+                            dark: '#121212',  // Deep charcoal matte
+                            glassLight: 'rgba(255, 255, 255, 0.65)',
+                            glassDark: 'rgba(30, 30, 30, 0.65)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Custom Scrollbar for minimal look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Soft Fade In Animation */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body class="bg-matte-light dark:bg-matte-dark text-slate-800 dark:text-slate-200 transition-colors duration-300">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Icons (Inline SVG for zero dependencies) ---
+        const Icons = {
+            Github: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            ),
+            Linkedin: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            ),
+            Mail: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            ),
+            Moon: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+            ),
+            Sun: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path></svg>
+            ),
+            ExternalLink: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            ),
+            Code: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            ),
+            Download: () => (
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            )
+        };
+
+        // --- Components ---
+
+        const GlassCard = ({ children, className = "", hoverEffect = false }) => {
+            const baseStyle = "rounded-2xl border backdrop-blur-xl transition-all duration-300";
+            
+            // Matte/Glass effect logic
+            // Light: semi-transparent white with subtle border
+            // Dark: semi-transparent dark gray with subtle border
+            const themeStyle = "bg-white/40 dark:bg-white/5 border-white/50 dark:border-white/10 shadow-sm";
+            
+            const hoverStyle = hoverEffect ? "hover:bg-white/60 dark:hover:bg-white/10 hover:scale-[1.01] hover:shadow-md" : "";
+
+            return (
+                <div className={`${baseStyle} ${themeStyle} ${hoverStyle} ${className}`}>
+                    {children}
+                </div>
+            );
+        };
+
+        const SkillBadge = ({ skill }) => (
+            <span className="px-3 py-1 text-sm font-medium rounded-full bg-slate-200/50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 border border-transparent hover:border-slate-400/30 transition-colors cursor-default">
+                {skill}
+            </span>
+        );
+
+        const NavLink = ({ href, text, active }) => (
+             <a 
+                href={href} 
+                className={`text-sm font-medium transition-colors duration-200 ${active ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
+            >
+                {text}
+            </a>
+        );
+
+        // --- Main Application ---
+
+        const App = () => {
+            const [darkMode, setDarkMode] = useState(false);
+            const [isScrolled, setIsScrolled] = useState(false);
+
+            // Initialize Theme based on System Preference
+            useEffect(() => {
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setDarkMode(systemPrefersDark);
+                if (systemPrefersDark) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+
+                // Scroll Listener for Nav Blur
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 20);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            // Manual Theme Toggle
+            const toggleTheme = () => {
+                setDarkMode(!darkMode);
+                if (!darkMode) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            };
+
+            // Dummy Data
+            const skills = {
+                languages: ["Java", "Python", "C++", "JavaScript", "SQL"],
+                frontend: ["React.js", "Tailwind CSS", "HTML5", "Framer Motion"],
+                backend: ["Node.js", "Express", "Django", "REST APIs"],
+                tools: ["Git", "Docker", "Linux", "AWS", "Postman"]
+            };
+
+            const projects = [
+                {
+                    title: "Neural Network Visualizer",
+                    desc: "An interactive tool to visualize how neural networks learn in real-time. Built with React and Python backend.",
+                    stack: ["React", "Python", "TensorFlow"],
+                    link: "#"
+                },
+                {
+                    title: "Distributed Task Scheduler",
+                    desc: "A fault-tolerant task scheduling system designed for microservices architectures.",
+                    stack: ["Go", "gRPC", "Docker"],
+                    link: "#"
+                },
+                {
+                    title: "Smart Campus App",
+                    desc: "Mobile-first web application for managing campus resources and student notifications.",
+                    stack: ["Flutter", "Firebase", "Node.js"],
+                    link: "#"
+                }
+            ];
+
+            return (
+                <div className="min-h-screen selection:bg-slate-300 dark:selection:bg-slate-700">
+                    
+                    {/* Navigation */}
+                    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/70 dark:bg-black/70 backdrop-blur-lg border-b border-slate-200/50 dark:border-white/5' : 'bg-transparent'}`}>
+                        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+                            <div className="font-bold text-lg tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                                <span className="w-8 h-8 bg-slate-200 dark:bg-slate-800 rounded-lg flex items-center justify-center shadow-inner">
+                                    <span className="font-mono text-sm">JK</span>
+                                </span>
+                            </div>
+                            
+                            <div className="hidden md:flex items-center gap-8">
+                                <NavLink href="#about" text="About" />
+                                <NavLink href="#skills" text="Skills" />
+                                <NavLink href="#projects" text="Projects" />
+                                <NavLink href="#contact" text="Contact" />
+                            </div>
+
+                            <button 
+                                onClick={toggleTheme} 
+                                className="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors"
+                                aria-label="Toggle Theme"
+                            >
+                                {darkMode ? <Icons.Sun /> : <Icons.Moon />}
+                            </button>
+                        </div>
+                    </nav>
+
+                    <main className="max-w-3xl mx-auto px-6 pt-32 pb-20">
+                        
+                        {/* Hero Section */}
+                        <section id="about" className="mb-24 fade-in-up">
+                            <div className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider uppercase bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full">
+                                CSE Graduate
+                            </div>
+                            <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-6">
+                                Building <span className="text-slate-400 dark:text-slate-600">digital systems</span> with precision.
+                            </h1>
+                            <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed max-w-2xl">
+                                Hello, I'm a Computer Science Engineer passionate about scalable architecture, clean code, and minimalistic design. I turn complex problems into elegant solutions.
+                            </p>
+                            
+                            <div className="flex items-center gap-4">
+                                <a href="#contact" className="px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium transition hover:opacity-90">
+                                    Let's Talk
+                                </a>
+                                <a href="#" className="px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-2">
+                                    <Icons.Download /> Resume
+                                </a>
+                            </div>
+                        </section>
+
+                        {/* Skills Section */}
+                        <section id="skills" className="mb-24 fade-in-up delay-100">
+                            <h2 className="text-2xl font-bold mb-8 flex items-center gap-2 text-slate-900 dark:text-white">
+                                <Icons.Code /> Technical Arsenal
+                            </h2>
+                            
+                            <GlassCard className="p-8">
+                                <div className="space-y-6">
+                                    <div>
+                                        <h3 className="text-sm uppercase tracking-wider text-slate-400 mb-3 font-semibold">Languages</h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {skills.languages.map(s => <SkillBadge key={s} skill={s} />)}
+                                        </div>
+                                    </div>
+                                    <div className="w-full h-px bg-slate-200/50 dark:bg-white/10"></div>
+                                    <div>
+                                        <h3 className="text-sm uppercase tracking-wider text-slate-400 mb-3 font-semibold">Frameworks & Libraries</h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {skills.frontend.concat(skills.backend).map(s => <SkillBadge key={s} skill={s} />)}
+                                        </div>
+                                    </div>
+                                    <div className="w-full h-px bg-slate-200/50 dark:bg-white/10"></div>
+                                    <div>
+                                        <h3 className="text-sm uppercase tracking-wider text-slate-400 mb-3 font-semibold">Tools & Cloud</h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {skills.tools.map(s => <SkillBadge key={s} skill={s} />)}
+                                        </div>
+                                    </div>
+                                </div>
+                            </GlassCard>
+                        </section>
+
+                        {/* Projects Section */}
+                        <section id="projects" className="mb-24 fade-in-up delay-200">
+                            <h2 className="text-2xl font-bold mb-8 text-slate-900 dark:text-white">Selected Projects</h2>
+                            <div className="grid gap-6">
+                                {projects.map((proj, idx) => (
+                                    <GlassCard key={idx} className="p-6" hoverEffect={true}>
+                                        <div className="flex justify-between items-start mb-4">
+                                            <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100">{proj.title}</h3>
+                                            <a href={proj.link} className="text-slate-400 hover:text-slate-600 dark:hover:text-white transition">
+                                                <Icons.ExternalLink />
+                                            </a>
+                                        </div>
+                                        <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                                            {proj.desc}
+                                        </p>
+                                        <div className="flex flex-wrap gap-2">
+                                            {proj.stack.map(tech => (
+                                                <span key={tech} className="text-xs font-mono text-slate-500 dark:text-slate-500">
+                                                    #{tech}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </GlassCard>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Education / Experience Minimal */}
+                        <section className="mb-24 fade-in-up delay-200">
+                             <h2 className="text-2xl font-bold mb-8 text-slate-900 dark:text-white">Education</h2>
+                             <GlassCard className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div>
+                                    <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">Bachelor of Technology (CSE)</h3>
+                                    <p className="text-slate-500 dark:text-slate-400">Prestigious University of Technology</p>
+                                </div>
+                                <div className="text-right sm:text-right text-slate-400 text-sm">
+                                    <p>2020 - 2024</p>
+                                    <p className="font-mono text-slate-600 dark:text-slate-300">CGPA: 3.8/4.0</p>
+                                </div>
+                             </GlassCard>
+                        </section>
+
+                        {/* Contact Section */}
+                        <section id="contact" className="fade-in-up delay-300">
+                            <GlassCard className="p-10 text-center">
+                                <h2 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Let's work together</h2>
+                                <p className="text-slate-600 dark:text-slate-400 mb-8">
+                                    Currently open for opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                                </p>
+                                <a href="mailto:hello@example.com" className="inline-flex items-center gap-2 text-lg font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                                    <Icons.Mail /> hello@example.com
+                                </a>
+
+                                <div className="mt-8 flex justify-center gap-6">
+                                    <a href="#" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-slate-900 dark:hover:text-white transition-all">
+                                        <Icons.Github />
+                                    </a>
+                                    <a href="#" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-blue-700 dark:hover:text-blue-400 transition-all">
+                                        <Icons.Linkedin />
+                                    </a>
+                                </div>
+                            </GlassCard>
+                        </section>
+
+                    </main>
+
+                    <footer className="text-center py-8 text-sm text-slate-400 dark:text-slate-600">
+                        <p>© {new Date().getFullYear()} CSE Portfolio. Designed with minimalist precision.</p>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
