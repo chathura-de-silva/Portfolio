@@ -78,13 +78,47 @@
         .delay-200 { animation-delay: 0.2s; }
         .delay-300 { animation-delay: 0.3s; }
         .delay-400 { animation-delay: 0.4s; }
+
+        /* --- CURSOR STYLES --- */
+        /* Hide default cursor only on devices that have a fine pointer (mouse) */
+        @media (pointer: fine) {
+            body {
+                cursor: none; /* Hide default arrow */
+            }
+            a, button, [role="button"] {
+                cursor: none; /* Ensure links don't show pointer */
+            }
+        }
+        
+        /* The Dot */
+        .cursor-dot {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+        }
+
+        /* The Ring (Follower) */
+        .cursor-ring {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9998;
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+        }
     </style>
 </head>
 <body class="bg-matte-light dark:bg-matte-dark text-slate-800 dark:text-slate-200 transition-colors duration-300">
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
 
         // --- Icons (Inline SVG for zero dependencies) ---
         const Icons = {
@@ -122,10 +156,91 @@
 
         // --- Components ---
 
+        const CustomCursor = () => {
+            const dotRef = useRef(null);
+            const ringRef = useRef(null);
+            const [isHovering, setIsHovering] = useState(false);
+            const [isVisible, setIsVisible] = useState(false);
+
+            useEffect(() => {
+                // Only enable custom cursor on fine pointer devices
+                if (!window.matchMedia("(pointer: fine)").matches) return;
+                
+                setIsVisible(true);
+
+                let requestRef;
+                let mouseX = -100;
+                let mouseY = -100;
+                let ringX = -100;
+                let ringY = -100;
+
+                const onMouseMove = (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    
+                    // Direct DOM update for dot (zero lag)
+                    if (dotRef.current) {
+                        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+                    }
+
+                    // Check if hovering clickable element
+                    const target = e.target;
+                    const isClickable = target.tagName === 'A' || 
+                                      target.tagName === 'BUTTON' || 
+                                      target.closest('a') || 
+                                      target.closest('button') ||
+                                      target.classList.contains('cursor-pointer');
+                    setIsHovering(!!isClickable);
+                };
+
+                // Animation loop for the ring (lerp for smooth trailing)
+                const animateRing = () => {
+                    const speed = 0.15; // Smoothing factor
+                    ringX += (mouseX - ringX) * speed;
+                    ringY += (mouseY - ringY) * speed;
+
+                    if (ringRef.current) {
+                        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+                    }
+                    requestRef = requestAnimationFrame(animateRing);
+                };
+
+                window.addEventListener('mousemove', onMouseMove);
+                requestRef = requestAnimationFrame(animateRing);
+
+                return () => {
+                    window.removeEventListener('mousemove', onMouseMove);
+                    cancelAnimationFrame(requestRef);
+                };
+            }, []);
+
+            if (!isVisible) return null;
+
+            return (
+                <>
+                    {/* The Main Dot */}
+                    <div 
+                        ref={dotRef} 
+                        className={`cursor-dot w-2 h-2 bg-slate-800 dark:bg-white transition-opacity duration-200 ${isHovering ? 'opacity-0' : 'opacity-100'}`}
+                    />
+                    
+                    {/* The Glass Ring Follower */}
+                    <div 
+                        ref={ringRef} 
+                        className={`cursor-ring border backdrop-blur-[1px] flex items-center justify-center
+                            ${isHovering 
+                                ? 'w-12 h-12 bg-slate-500/10 border-slate-400/30 dark:bg-white/10 dark:border-white/30' 
+                                : 'w-8 h-8 bg-transparent border-slate-400/50 dark:border-white/30'}
+                        `}
+                    />
+                </>
+            );
+        };
+
         const GlassCard = ({ children, className = "", hoverEffect = false }) => {
             const baseStyle = "rounded-2xl border backdrop-blur-xl transition-all duration-300";
             const themeStyle = "bg-white/40 dark:bg-white/5 border-white/50 dark:border-white/10 shadow-sm";
-            const hoverStyle = hoverEffect ? "hover:bg-white/60 dark:hover:bg-white/10 hover:scale-[1.01] hover:shadow-md" : "";
+            const hoverStyle = hoverEffect ? "hover:bg-white/60 dark:hover:bg-white/10 hover:scale-[1.01] hover:shadow-md cursor-pointer" : ""; // Added cursor-pointer
 
             return (
                 <div className={`${baseStyle} ${themeStyle} ${hoverStyle} ${className}`}>
@@ -135,7 +250,7 @@
         };
 
         const SkillBadge = ({ skill }) => (
-            <span className="px-3 py-1 text-sm font-medium rounded-full bg-slate-200/50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 border border-transparent hover:border-slate-400/30 transition-colors cursor-default">
+            <span className="px-3 py-1 text-sm font-medium rounded-full bg-slate-200/50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300 border border-transparent hover:border-slate-400/30 transition-colors cursor-default hover:scale-105 transform duration-200">
                 {skill}
             </span>
         );
@@ -143,9 +258,11 @@
         const NavLink = ({ href, text, active }) => (
              <a 
                 href={href} 
-                className={`text-sm font-medium transition-colors duration-200 ${active ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
+                className={`text-sm font-medium transition-colors duration-200 relative group ${active ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
             >
                 {text}
+                {/* Little underline animation */}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-slate-800 dark:bg-white transition-all duration-300 group-hover:w-full"></span>
             </a>
         );
 
@@ -276,6 +393,7 @@
 
             return (
                 <div className="min-h-screen selection:bg-slate-300 dark:selection:bg-slate-700">
+                    <CustomCursor />
                     
                     {/* Navigation */}
                     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/70 dark:bg-black/70 backdrop-blur-lg border-b border-slate-200/50 dark:border-white/5' : 'bg-transparent'}`}>
@@ -319,10 +437,10 @@
                                 </p>
                                 
                                 <div className="flex items-center justify-center md:justify-start gap-4">
-                                    <a href="#contact" className="px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium transition hover:opacity-90 shadow-lg shadow-slate-200 dark:shadow-none">
+                                    <a href="#contact" className="px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium transition hover:opacity-90 shadow-lg shadow-slate-200 dark:shadow-none  transform hover:scale-105">
                                         Let's Talk
                                     </a>
-                                    <a href="#" className="px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-2">
+                                    <a href="#" className="px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-2  transform hover:scale-105">
                                         <Icons.Download /> Resume
                                     </a>
                                 </div>
@@ -429,15 +547,15 @@
                                     <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-lg mx-auto">
                                         Currently open for opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
                                     </p>
-                                    <a href="mailto:hello@example.com" className="inline-flex items-center gap-2 text-xl font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                                    <a href="mailto:hello@example.com" className="inline-flex items-center gap-2 text-xl font-medium text-blue-600 dark:text-blue-400 hover:underline transform hover:scale-105 transition-transform">
                                         <Icons.Mail /> hello@example.com
                                     </a>
 
                                     <div className="mt-10 flex justify-center gap-6">
-                                        <a href="#" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-slate-900 dark:hover:text-white transition-all">
+                                        <a href="#" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-slate-900 dark:hover:text-white transition-all  transform hover:scale-105">
                                             <Icons.Github />
                                         </a>
-                                        <a href="#" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-blue-700 dark:hover:text-blue-400 transition-all">
+                                        <a href="#" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-blue-700 dark:hover:text-blue-400 transition-all transform hover:scale-105">
                                             <Icons.Linkedin />
                                         </a>
                                     </div>
