@@ -231,7 +231,7 @@ const App = () => {
 
     const timelineData = [
         {
-            year: "2021 - Present",
+            year: "2022 - Present",
             title: "Computer Engineering Undergraduate",
             org: "Faculty of Engineering, University of Moratuwa",
             desc: "B.Sc.Eng(Hons) Computer Science & Engineering - Specialising in Integrated Computer Engineering",
@@ -313,14 +313,14 @@ const App = () => {
     
     {/* Light mode image */}
     <img
-      src="/assets/profile-light.jpg"
+      src="https://github.com/chathura-de-silva/Portfolio/blob/single-page-version/assets/profile-light.jpg?raw=true"
       alt="Profile light"
       className="w-full h-full object-cover block dark:hidden"
     />
 
     {/* Dark mode image */}
     <img
-      src="/assets/profile-dark.jpg"
+      src="https://github.com/chathura-de-silva/Portfolio/blob/single-page-version/assets/profile-dark.jpg?raw=true"
       alt="Profile dark"
       className="w-full h-full object-cover hidden dark:block"
     />
