@@ -234,7 +234,7 @@ const App = () => {
             year: "2021 - Present",
             title: "Computer Engineering Undergraduate",
             org: "Faculty of Engineering, University of Moratuwa",
-            desc: "Specialising in Integrated Computer Engineering",
+            desc: "B.Sc.Eng(Hons) Computer Science & Engineering - Specialising in Integrated Computer Engineering",
             type: "education"
         },
         {
@@ -261,8 +261,8 @@ const App = () => {
                     </div>
                     
                     <div className="hidden md:flex items-center gap-8">
-                        <NavLink href="#about" text="About" />
-                        <NavLink href="#timeline" text="Timeline" />
+                        <NavLink href="#overview" text="Overview" />
+                        <NavLink href="#education" text="Education" />
                         <NavLink href="#skills" text="Skills" />
                         <NavLink href="#projects" text="Projects" />
                     </div>
@@ -280,7 +280,7 @@ const App = () => {
             <main className="max-w-4xl mx-auto px-6 pt-32 pb-20">
                 
                 {/* Hero Section */}
-                <section id="about" className="mb-28 fade-in-up flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+                <section id="overview" className="mb-28 fade-in-up flex flex-col-reverse md:flex-row items-center justify-between gap-12">
                     <div className="flex-1 text-center md:text-left">
                         <div className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider uppercase bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full">
                             Chathura De Silva
@@ -331,7 +331,7 @@ const App = () => {
                 </section>
 
                 {/* Timeline Section */}
-                <section id="timeline" className="mb-24 fade-in-up delay-100">
+                <section id="education" className="mb-24 fade-in-up delay-100">
                         <h2 className="text-2xl font-bold mb-10 flex items-center gap-2 text-slate-900 dark:text-white">
                         <span className="text-slate-400">01.</span> Education
                     </h2>
@@ -418,15 +418,30 @@ const App = () => {
                             <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-lg mx-auto">
                                 Currently open for opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
                             </p>
-                            <a href="mailto:hello@example.com" className="inline-flex items-center gap-2 text-xl font-medium text-blue-600 dark:text-blue-400 hover:underline transform hover:scale-105 transition-transform">
-                                <Icons.Mail /> ac.chathura@gmail.com
-                            </a>
+                            
+                            <form action="https://formsubmit.co/94a3bc84b7047da4cfd7db995104d8b7" method="POST" className="max-w-md mx-auto space-y-4 text-left mt-8">
+                                <div>
+                                    <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Name</label>
+                                    <input type="text" name="name" required className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500" placeholder="Your Name" />
+                                </div>
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
+                                    <input type="email" name="email" required className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500" placeholder="your@email.com" />
+                                </div>
+                                <div>
+                                    <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Message</label>
+                                    <textarea name="message" rows="4" required className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500" placeholder="How can I help you?"></textarea>
+                                </div>
+                                <button type="submit" className="w-full py-3 px-6 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:opacity-90 transition-transform transform hover:scale-[1.02] shadow-lg">
+                                    Send Message
+                                </button>
+                            </form>
 
                             <div className="mt-10 flex justify-center gap-6">
-                                <a href="#" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-slate-900 dark:hover:text-white transition-all  transform hover:scale-105">
+                                <a href="https://github.com/chathura-de-silva" target="_blank" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-slate-900 dark:hover:text-white transition-all  transform hover:scale-105">
                                     <Icons.Github />
                                 </a>
-                                <a href="#" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-blue-700 dark:hover:text-blue-400 transition-all transform hover:scale-105">
+                                <a href="https://www.linkedin.com/in/chathuradsilva" target="_blank" className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-white hover:shadow-md dark:hover:bg-black hover:text-blue-700 dark:hover:text-blue-400 transition-all transform hover:scale-105">
                                     <Icons.Linkedin />
                                 </a>
                             </div>
