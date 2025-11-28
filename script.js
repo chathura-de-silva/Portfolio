@@ -92,8 +92,6 @@ const CustomCursor = () => {
 
     if (!isVisible) return null;
 
-    // FIX: Added 'fixed', 'rounded-full', 'pointer-events-none', 'z-[9999]' directly here.
-    // This ensures the cursor works even if styles.css is missing.
     return (
         <React.Fragment>
             <div 
@@ -114,8 +112,7 @@ const CustomCursor = () => {
 };
 
 const GlassCard = ({ children, className = "", hoverEffect = false }) => {
-    // FIX: Changed 'transition-all' to 'transition-transform' and 'transition-colors'
-    // This prevents the layout from jittering (shifting) when you hover.
+
     const baseStyle = "rounded-2xl border backdrop-blur-xl transition-transform transition-colors duration-300 ease-out will-change-transform";
     const themeStyle = "bg-white/40 dark:bg-white/5 border-white/50 dark:border-white/10 shadow-sm";
     const hoverStyle = hoverEffect ? "hover:bg-white/60 dark:hover:bg-white/10 hover:scale-[1.01] hover:shadow-md cursor-pointer" : ""; 
@@ -199,68 +196,55 @@ const App = () => {
     };
 
     const skills = {
-        languages: ["Java", "Python", "C++", "JavaScript", "SQL"],
-        frontend: ["React.js", "Tailwind CSS", "HTML5", "Framer Motion"],
-        backend: ["Node.js", "Express", "Django", "REST APIs"],
-        tools: ["Git", "Docker", "Linux", "AWS", "Postman"]
+        languages: [ "C++", "Python", "Dart","JavaScript", "SQL", "C", "Julia", "VHDL"],
+        frontend: ["NextJS", "React", "Tailwind CSS", "Flutter", ],
+        backend: ["NodeJS", "Express", "Flask", "NestJS"],
+        tools: ["Git", "Linux", "AWS", "Postman", "Figma"]
     };
 
     const projects = [
         {
-            title: "Neural Network Visualizer",
-            desc: "An interactive tool to visualize how neural networks learn in real-time.",
-            stack: ["React", "Python", "TensorFlow"],
-            link: "#"
+            title: "ShutterSnap",
+            desc: "An on device, privacy friendly solution to instantly retrieve the mechanical shutter actuation count of professional cameras up to a provided exposure.",
+            stack: ["Svelte", "dcraw", "Tailwind CSS"],
+            link: "https://github.com/chathura-de-silva/Shuttersnap"
         },
         {
-            title: "Distributed Task Scheduler",
-            desc: "A fault-tolerant task scheduling system designed for microservices.",
-            stack: ["Go", "gRPC", "Docker"],
-            link: "#"
+            title: "FireSense",
+            desc: "Embedded Node Network that relies on a specialized node-to-node communication protocol and internet to alert on wildfires.",
+            stack: ["PlatformIO", "LoRa", "C++"],
+            link: "https://github.com/chathura-de-silva/Firesense"
         },
         {
-            title: "Smart Campus App",
-            desc: "Mobile-first web application for managing campus resources.",
-            stack: ["Flutter", "Firebase", "Node.js"],
-            link: "#"
+            title: "Smart Medibox",
+            desc: "A smart IoT device with intuitive UI/UX that reminds users to take their medicine on time.",
+            stack: ["PlatformIO", "Node-Red", "C++"],
+            link: "https://github.com/chathura-de-silva/Smart-Medibox"
         },
             {
-            title: "Algorithm Analyzer",
-            desc: "Compares sorting algorithms complexity with dynamic graphs.",
-            stack: ["D3.js", "JavaScript", "C++"],
-            link: "#"
+            title: "Project Verdex",
+            desc: "Mobile first solution for Rice plant Disease Detection (Closed Source)",
+            stack: ["Flutter", "Firebase"],
+            link: "https://github.com/Project-Verdex"
         }
     ];
 
     const timelineData = [
         {
-            year: "2024 - Present",
-            title: "Junior Software Engineer",
-            org: "Tech Innovations Ltd.",
-            desc: "Focusing on backend scalability and cloud infrastructure optimization using AWS.",
-            type: "work"
-        },
-        {
-            year: "2020 - 2024",
-            title: "B.Tech in Computer Science",
-            org: "Prestigious University of Technology",
-            desc: "Graduated with Honors (3.8 CGPA). Specialized in AI & Data Science. Lead organizer for HackTheFuture 2023.",
+            year: "2021 - Present",
+            title: "Computer Engineering Undergraduate",
+            org: "Faculty of Engineering, University of Moratuwa",
+            desc: "Specialising in Integrated Computer Engineering",
             type: "education"
         },
         {
-            year: "2018 - 2020",
-            title: "Higher Secondary Education",
-            org: "City Science College",
-            desc: "Majored in Physics, Chemistry, and Mathematics. Secured district rank in Mathematics Olympiad.",
+            year: "2007 - 2020",
+            title: "Grade 5 Scholarship, GCE Ordinary and Advanced Level",
+            org: "Ananda College, Colombo",
+            desc: "Advanced Level Physical Science Stream",
             type: "education"
         },
-            {
-            year: "2018",
-            title: "Secondary School",
-            org: "St. Mary's High School",
-            desc: "Completed secondary education with distinction in Computer Applications.",
-            type: "education"
-        }
+          
     ];
 
     return (
@@ -270,9 +254,9 @@ const App = () => {
             {/* Navigation */}
             <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/70 dark:bg-black/70 backdrop-blur-lg border-b border-slate-200/50 dark:border-white/5' : 'bg-transparent'}`}>
                 <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-                    <div className="font-bold text-lg tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                    <div className="font-bold text-lg tracking-normal text-slate-900 dark:text-white flex items-center gap-2">
                         <span className="w-8 h-8 bg-slate-200 dark:bg-slate-800 rounded-lg flex items-center justify-center shadow-inner">
-                            <span className="font-mono text-sm">JK</span>
+                            <span className="font-mono text-sm">CD</span>
                         </span>
                     </div>
                     
@@ -299,42 +283,57 @@ const App = () => {
                 <section id="about" className="mb-28 fade-in-up flex flex-col-reverse md:flex-row items-center justify-between gap-12">
                     <div className="flex-1 text-center md:text-left">
                         <div className="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider uppercase bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full">
-                            CSE Graduate
+                            Chathura De Silva
                         </div>
                         <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-6">
                             Building <span className="text-slate-400 dark:text-slate-600">systems</span> that matter.
                         </h1>
-                        <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed max-w-xl mx-auto md:mx-0">
-                            Hello, I'm a Computer Science Engineer passionate about scalable architecture, clean code, and minimalistic design.
+                        <p className="text-lg text-slate-600 dark:text-slate-400  leading-relaxed max-w-xl mx-auto md:mx-0">
+                            Developer | Embedded Systems & Machine Vision Enthusiast
+                        </p>
+                         <p className="text-md  mb-8 leading-relaxed max-w-xl mx-auto md:mx-0">
+                            Colombo, Sri Lanka
                         </p>
                         
                         <div className="flex items-center justify-center md:justify-start gap-4">
                             <a href="#contact" className="px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-medium transition hover:opacity-90 shadow-lg shadow-slate-200 dark:shadow-none  transform hover:scale-105">
-                                Let's Talk
+                                Email Me
                             </a>
-                            <a href="#" className="px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-2  transform hover:scale-105">
-                                <Icons.Download /> Resume
+                            <a href="https://www.linkedin.com/in/chathuradsilva" target="_blank" className="px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-2  transform hover:scale-105">
+                                <Icons.Linkedin /> LinkedIn
                             </a>
                         </div>
                     </div>
 
                     {/* Profile Image with Glow */}
-                    <div className="relative shrink-0">
-                        <div className="absolute -inset-4 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full blur-2xl opacity-30 animate-pulse"></div>
-                        <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white/50 dark:border-slate-800/50 shadow-2xl ring-1 ring-slate-900/5">
-                            <img 
-                                src="https://api.dicebear.com/7.x/notionists/svg?seed=Felix&backgroundColor=e5e7eb" 
-                                alt="Profile" 
-                                className="w-full h-full object-cover bg-slate-100 dark:bg-slate-800" 
-                            />
-                        </div>
-                    </div>
+            <div className="relative shrink-0">
+  <div className="absolute -inset-4 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+
+  <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white/50 dark:border-slate-800/50 shadow-2xl ring-1 ring-slate-900/5">
+    
+    {/* Light mode image */}
+    <img
+      src="/assets/profile-light.jpg"
+      alt="Profile light"
+      className="w-full h-full object-cover block dark:hidden"
+    />
+
+    {/* Dark mode image */}
+    <img
+      src="/assets/profile-dark.jpg"
+      alt="Profile dark"
+      className="w-full h-full object-cover hidden dark:block"
+    />
+
+  </div>
+</div>
+
                 </section>
 
                 {/* Timeline Section */}
                 <section id="timeline" className="mb-24 fade-in-up delay-100">
                         <h2 className="text-2xl font-bold mb-10 flex items-center gap-2 text-slate-900 dark:text-white">
-                        <span className="text-slate-400">01.</span> Journey
+                        <span className="text-slate-400">01.</span> Education
                     </h2>
                     <div className="ml-2 md:ml-4">
                         {timelineData.map((item, index) => (
@@ -391,7 +390,7 @@ const App = () => {
                                     <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
                                         <Icons.Code />
                                     </div>
-                                    <a href={proj.link} className="text-slate-400 hover:text-slate-600 dark:hover:text-white transition p-1">
+                                    <a href={proj.link} target="_blank" className="text-slate-400 hover:text-slate-600 dark:hover:text-white transition p-1">
                                         <Icons.ExternalLink />
                                     </a>
                                 </div>
@@ -420,7 +419,7 @@ const App = () => {
                                 Currently open for opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
                             </p>
                             <a href="mailto:hello@example.com" className="inline-flex items-center gap-2 text-xl font-medium text-blue-600 dark:text-blue-400 hover:underline transform hover:scale-105 transition-transform">
-                                <Icons.Mail /> hello@example.com
+                                <Icons.Mail /> ac.chathura@gmail.com
                             </a>
 
                             <div className="mt-10 flex justify-center gap-6">
@@ -438,7 +437,7 @@ const App = () => {
             </main>
 
             <footer className="text-center py-8 text-sm text-slate-400 dark:text-slate-600">
-                <p>© {new Date().getFullYear()} CSE Portfolio. Designed with minimalist precision.</p>
+                <p>© {new Date().getFullYear()} - Chathura De Silva</p>
             </footer>
         </div>
     );
