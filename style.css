@@ -42,11 +42,8 @@ body {
 /* --- CURSOR STYLES --- */
 /* Hide default cursor only on devices that have a fine pointer (mouse) */
 @media (pointer: fine) {
-    body {
-        cursor: none; /* Hide default arrow */
-    }
-    a, button, [role="button"] {
-        cursor: none; /* Ensure links don't show pointer */
+    html, body, a, button, [role="button"], .cursor-pointer, input, textarea, select {
+        cursor: none !important; /* Hide default arrow */
     }
 }
 
